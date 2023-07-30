@@ -66,7 +66,6 @@ def change_time():
 # 最初のページ
 def main_page():
     st.markdown(
-        "<h2 style='text-align: center;'>バス乗車数グラフ</h2>",
         unsafe_allow_html = True,
     )
 
