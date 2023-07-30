@@ -65,6 +65,14 @@ def change_time():
 
 # 最初のページ
 def main_page():
+    st.markdown("""
+        <style>
+               .block-container {
+                    padding-top: 1rem;
+                    padding-bottom: 0rem;
+                }
+        </style>
+        """, unsafe_allow_html=True)
 
     column_list = st.session_state.df0.columns[3:].values
     #column_list_selector = st.sidebar.multiselect("停留所", column_list, default = column_list)
@@ -115,6 +123,7 @@ def main_page():
                           y = st.session_state.select_arr.T[st.session_state.select_arr.index[i]],
                           name = index_selector[i])
                 )
+    fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
     st.plotly_chart(fig)
 
 # ページ判定
