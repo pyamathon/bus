@@ -8,6 +8,7 @@ import plotly.graph_objects as go
 # ページのタイトル設定
 st.set_page_config(
     page_title = "bus",
+    layout="wide"
 )
 
 # csv読み込み
