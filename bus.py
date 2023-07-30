@@ -116,7 +116,7 @@ def main_page():
                                         )
                                     ]
 
-    st.write(st.session_state.select_arr1)
+    st.dataframe(st.session_state.select_arr1,800,300)
     fig = go.Figure()
     for i in range(len(st.session_state.select_arr.index)):
         fig.add_traces(go.Scatter(x = st.session_state.select_arr.columns.values,
