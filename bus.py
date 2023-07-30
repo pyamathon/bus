@@ -65,9 +65,6 @@ def change_time():
 
 # 最初のページ
 def main_page():
-    st.markdown(
-        unsafe_allow_html = True,
-    )
 
     column_list = st.session_state.df0.columns[3:].values
     #column_list_selector = st.sidebar.multiselect("停留所", column_list, default = column_list)
@@ -119,7 +116,6 @@ def main_page():
                           name = index_selector[i])
                 )
     st.plotly_chart(fig)
-
 
 # ページ判定
 if st.session_state.page_id == -1:
