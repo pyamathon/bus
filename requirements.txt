@@ -3,4 +3,4 @@ pandas
 numpy
 matplotlib
 japanize_matplotlib
-plotly.graph_objects
+plotly
