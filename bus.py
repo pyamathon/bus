@@ -70,7 +70,15 @@ def main_page():
                .block-container {
                     padding-top: 1rem;
                     padding-bottom: 0rem;
+                    padding-left: 1rem;
+                    padding-right: 1rem;
                 }
+               .sidebar-content{
+                    margin-top: -75px;
+               }
+               .css-6qob1r.e1fqkh3o3{
+                    margin-top: -75px;
+               }
         </style>
         """, unsafe_allow_html=True)
 
