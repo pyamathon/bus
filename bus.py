@@ -33,16 +33,6 @@ def df_list(column):
     unique_list = st.session_state.df0[column].dropna(how='all').unique()
     st.session_state.df_list = unique_list
 
-#選択されている項目のテキスト表示用
-def add_text(selector, column):
-    unique_list = st.session_state.df0[column].dropna(how='all').unique()
-    sort_unique_list = np.sort(unique_list)
-    selector = np.sort(selector)
-    if np.array_equal(selector, sort_unique_list) == True:
-        st.sidebar.text("全ての人が選ばれています。")
-    else:
-        st.sidebar.text(str(sort_unique_list).replace(str(selector),'') + "の人が除かれています。")
-
 #サイドバーの時台→時間の変更判定
 def change_around_time():
     start_6 = [s for s in st.session_state["time"] if s.startswith('6')]
@@ -88,7 +78,7 @@ def main_page():
 
     #サイドバー作成用
     #[6,7,8]時台
-    df_list('時代')
+    df_list('時台')
     around_time_selector = st.sidebar.multiselect("時台",st.session_state.df_list, default = st.session_state.df_list, key = "around_time", on_change = change_time)
     if len(around_time_selector) == 0:
         st.sidebar.text("どの時間も選ばれていません")
