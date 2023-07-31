@@ -100,7 +100,7 @@ def main_page():
 
     st.session_state.select_arr = st.session_state.df0[
                                         (
-                                        st.session_state.df0["時代"].isin(around_time_selector)
+                                        st.session_state.df0["時台"].isin(around_time_selector)
                                         & st.session_state.df0["終点"].isin(end_point_selector)
                                         & st.session_state.df0["始発時分"].isin(index_selector)
                                         )
@@ -108,7 +108,7 @@ def main_page():
 
     st.session_state.select_arr1 = st.session_state.df0[
                                         (
-                                        st.session_state.df0["時代"].isin(around_time_selector)
+                                        st.session_state.df0["時台"].isin(around_time_selector)
                                         & st.session_state.df0["終点"].isin(end_point_selector)
                                         & st.session_state.df0["始発時分"].isin(index_selector)
                                         )
