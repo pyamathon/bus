@@ -75,7 +75,7 @@ def main_page():
     column_list = st.session_state.df0.columns[3:].values
     #column_list_selector = st.sidebar.multiselect("停留所", column_list, default = column_list)
     df_list('始発時分')
-    index_selector = st.sidebar.multiselect("出発時間", st.session_state.df_list, default = st.session_state.df_list, key = "time", on_change = change_around_time)
+    index_selector = st.sidebar.multiselect("出発時間", st.session_state.df_list[:4], default = st.session_state.df_list[:4], key = "time", on_change = change_around_time)
 
     #サイドバー作成用
     #[6,7,8]時台
