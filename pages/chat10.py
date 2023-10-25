@@ -3,23 +3,24 @@ import numpy as np
 import pandas as pd
 import sentencepiece
 from transformers import BertJapaneseTokenizer, BertModel
-from sentence_transformers import SentenceTransformer
-from sentence_transformers import models
+# from sentence_transformers import SentenceTransformer
+# from sentence_transformers import models
 import torch
-from torch.nn.functional import cosine_similarity
 
 # 日本語対応パッケージのインストール
 st.title("質問箱")
 
+# チャットログを保存したセッション情報を初期化
+if "chat_log" not in st.session_state:
+    st.session_state.chat_log = []
+
 # 定数定義
 USER_NAME = "user"
 ASSISTANT_NAME = "assistant"
-MORIAGE_YAKU_NAME = "moriage_yaku"
-MORIAGE_YAKU2_NAME = "moriage_yaku2"
 MODEL_NAME = 'cl-tohoku/bert-base-japanese-whole-word-masking'
-
 tokenizer = BertJapaneseTokenizer.from_pretrained(MODEL_NAME)
 model = BertModel.from_pretrained(MODEL_NAME)
+st.session_state.df = pd.read_csv('dict.csv')
 
 def sentence_to_vector(model, tokenizer, sentence):
     # 文を単語に区切って数字にラベル化
@@ -35,64 +36,45 @@ def sentence_to_vector(model, tokenizer, sentence):
 
 def cosine_similarity(x1, x2, eps): # dimは単純化のため省略
     w12 = torch.sum(x1 * x2)
-    st.write(w12)
     w1 = torch.sum(x1 * x1)
-    st.write(w1)
     w2 = torch.sum(x2 * x2)
-    st.write(w2)
     n12 = (w1 * w2).clamp_min_(eps * eps).sqrt_()
     score = w12 / n12
     st.session_state.score = score.item()
 
 def calc_similarity(sentence1, sentence2):
-    st.session_state.sentence_vector1 = sentence_to_vector(model, tokenizer, sentence1)
-    st.session_state.sentence_vector2 = sentence_to_vector(model, tokenizer, sentence2)
-    cosine_similarity(st.session_state.sentence_vector1, st.session_state.sentence_vector2, 1e-8)
-
-# チャットログを保存したセッション情報を初期化
-if "chat_log" not in st.session_state:
-    st.session_state.chat_log = []
+    sentence_vector1 = sentence_to_vector(model, tokenizer, sentence1)
+    sentence_vector2 = sentence_to_vector(model, tokenizer, sentence2)
+    cosine_similarity(sentence_vector1, sentence_vector2, 1e-8)
+    return st.session_state.score
 
 user_msg = st.chat_input("質問、要望等あれば入力してください")
 if user_msg:
     st.session_state.sentence1 = user_msg
-    st.session_state.sentence2 = "名前はまだない。"
     st.session_state.similar_value = 0
     st.session_state.similar_word = ""
-    st.session_state.df = pd.read_csv('dict.csv')
-    st.session_state.value = calc_similarity(st.session_state.sentence1, st.session_state.sentence2)
-
-    # for i in range(60):
-    #     st.session_state.sentence2 = st.session_state.df["question"][i]
-    #     st.session_state.value = calc_similarity(st.session_state.sentence1, st.session_state.sentence2)
-    #     if st.session_state.value > st.session_state.similar_value:
-    #         st.session_state.similar_value = st.session_state.value
-    #         st.session_state.similar_word = st.session_state.df["answer"][i]
+    
+    for i in range(60):
+        st.session_state.sentence2 = ""
+        st.session_state.value = 0
+        st.session_state.sentence2 = st.session_state.df["question"][i]
+        st.session_state.value = calc_similarity(st.session_state.sentence1, st.session_state.sentence2)
+        if st.session_state.value > st.session_state.similar_value:
+            st.session_state.similar_value = st.session_state.value
+            st.session_state.similar_word = st.session_state.df["answer"][i]
 
     # 以前のチャットログを表示
     for chat in st.session_state.chat_log:
-        avator = avator_img_dict.get(chat["name"], None)
-        with st.chat_message(chat["name"], avatar=avator):
+        with st.chat_message(chat["name"]):
             st.write(chat["msg"])
 
     # 最新のメッセージを表示
     assistant_msg = "もう一度入力してください"
-    moriage_yaku_msg = "アンコール！アンコール！"
-    moriage_yaku2_msg = "そっれ、アンコール！アンコール！"
     with st.chat_message(USER_NAME):
         st.write(user_msg)
     with st.chat_message(ASSISTANT_NAME):
-        st.write(user_msg)
-    with st.chat_message(MORIAGE_YAKU_NAME, avatar=avator_img_dict[MORIAGE_YAKU_NAME]):
-        st.write(moriage_yaku_msg)
-    # with st.chat_message(
-    #     MORIAGE_YAKU2_NAME,
-    #     avatar=avator_img_dict[MORIAGE_YAKU2_NAME],
-    # ):
-        # st.write(moriage_yaku2_msg)
+        st.write(st.session_state.similar_word)
 
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
-    st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": user_msg})
-    st.session_state.chat_log.append({"name": MORIAGE_YAKU_NAME, "msg": user_msg})
-    # st.session_state.chat_log.append({"name": MORIAGE_YAKU2_NAME, "msg": user_msg})
+    st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": st.session_state.similar_word})
