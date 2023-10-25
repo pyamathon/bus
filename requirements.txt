@@ -4,3 +4,9 @@ numpy
 matplotlib
 japanize_matplotlib
 plotly
+sentencepiece
+transformers
+sentence_transformers
+torch
+fugashi
+ipadic
