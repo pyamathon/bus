@@ -41,7 +41,8 @@ def cosine_similarity(x1, x2, eps): # dimは単純化のため省略
     n12 = (w1 * w2).clamp_min_(eps * eps).sqrt_()
     score = w12 / n12
     st.session_state.score = score.item()
-
+    
+@st.cache
 def calc_similarity(sentence1, sentence2):
     sentence_vector1 = sentence_to_vector(model, tokenizer, sentence1)
     sentence_vector2 = sentence_to_vector(model, tokenizer, sentence2)
