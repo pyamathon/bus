@@ -1,11 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import sentencepiece
-from transformers import BertJapaneseTokenizer, BertModel
-# from sentence_transformers import SentenceTransformer
-# from sentence_transformers import models
-import torch
+from gradio_client import Client
 
 # 日本語対応パッケージのインストール
 st.title("質問箱")
@@ -17,37 +13,7 @@ if "chat_log" not in st.session_state:
 # 定数定義
 USER_NAME = "user"
 ASSISTANT_NAME = "assistant"
-MODEL_NAME = 'cl-tohoku/bert-base-japanese-whole-word-masking'
-tokenizer = BertJapaneseTokenizer.from_pretrained(MODEL_NAME)
-model = BertModel.from_pretrained(MODEL_NAME)
 st.session_state.df = pd.read_csv('dict.csv')
-
-def sentence_to_vector(model, tokenizer, sentence):
-    # 文を単語に区切って数字にラベル化
-    tokens = tokenizer(sentence)["input_ids"]
-    # BERTモデルの処理のためtensor型に変換
-    input = torch.tensor(tokens).reshape(1,-1)
-    # BERTモデルに入力し文のベクトルを取得
-    with torch.no_grad():
-        outputs = model(input, output_hidden_states=True)
-        last_hidden_state = outputs.last_hidden_state[0]
-        st.session_state.averaged_hidden_state = last_hidden_state.sum(dim=0) / len(last_hidden_state)
-    return st.session_state.averaged_hidden_state
-
-def cosine_similarity(x1, x2, eps): # dimは単純化のため省略
-    w12 = torch.sum(x1 * x2)
-    w1 = torch.sum(x1 * x1)
-    w2 = torch.sum(x2 * x2)
-    n12 = (w1 * w2).clamp_min_(eps * eps).sqrt_()
-    score = w12 / n12
-    st.session_state.score = score.item()
-    
-@st.cache
-def calc_similarity(sentence1, sentence2):
-    sentence_vector1 = sentence_to_vector(model, tokenizer, sentence1)
-    sentence_vector2 = sentence_to_vector(model, tokenizer, sentence2)
-    cosine_similarity(sentence_vector1, sentence_vector2, 1e-8)
-    return st.session_state.score
 
 user_msg = st.chat_input("質問、要望等あれば入力してください")
 if user_msg:
@@ -59,7 +25,12 @@ if user_msg:
         st.session_state.sentence2 = ""
         st.session_state.value = 0
         st.session_state.sentence2 = st.session_state.df["question"][i]
-        st.session_state.value = calc_similarity(st.session_state.sentence1, st.session_state.sentence2)
+        client = Client("https://pyamath-chatbot.hf.space/--replicas/sbj9h/")
+        result = client.predict(
+            "Howdy!",	# str  in 'user_msg' Textbox component
+            api_name="/predict"
+        )
+        st.session_state.value = result
         if st.session_state.value > st.session_state.similar_value:
             st.session_state.similar_value = st.session_state.value
             st.session_state.similar_word = st.session_state.df["answer"][i]
