@@ -21,7 +21,7 @@ if user_msg:
     st.session_state.similar_value = 0
     st.session_state.similar_word = ""
 
-    client = Client("https://pyamath-chatbot.hf.space/--replicas/sbj9h/")
+    client = Client("https://pyamath-chatbot.hf.space/--replicas/kp9kw/")
     result = client.predict(
         "Howdy!",	# str  in 'user_msg' Textbox component
         api_name="/predict"
