@@ -17,27 +17,24 @@ st.session_state.df = pd.read_csv('dict.csv')
 
 user_msg = st.chat_input("質問、要望等あれば入力してください")
 if user_msg:
-    st.session_state.sentence1 = user_msg
-    st.session_state.similar_value = 0
-    st.session_state.similar_word = ""
-
     client = Client("https://pyamath-chatbot.hf.space/--replicas/kp9kw/")
     result = client.predict(
-        "Howdy!",	# str  in 'user_msg' Textbox component
+        user_msg,	# str  in 'user_msg' Textbox component
         api_name="/predict"
     )
-    st.write(result)
-    
+    st.session_state.similar_word = result[0]
+    st.session_state.value = result[1]
+        
     # for i in range(60):
     #     st.session_state.sentence2 = ""
     #     st.session_state.value = 0
     #     st.session_state.sentence2 = st.session_state.df["question"][i]
-    #     client = Client("https://pyamath-chatbot.hf.space/--replicas/sbj9h/")
+    #     client = Client("https://pyamath-chatbot.hf.space/--replicas/kp9kw/")
     #     result = client.predict(
-    #         "Howdy!",	# str  in 'user_msg' Textbox component
+    #         user_msg,	# str  in 'user_msg' Textbox component
     #         api_name="/predict"
     #     )
-    #     st.session_state.value = result
+    #     st.session_state.value = result[1]
     #     if st.session_state.value > st.session_state.similar_value:
     #         st.session_state.similar_value = st.session_state.value
     #         st.session_state.similar_word = st.session_state.df["answer"][i]
