@@ -20,20 +20,27 @@ if user_msg:
     st.session_state.sentence1 = user_msg
     st.session_state.similar_value = 0
     st.session_state.similar_word = ""
+
+    client = Client("https://pyamath-chatbot.hf.space/--replicas/sbj9h/")
+    result = client.predict(
+        "Howdy!",	# str  in 'user_msg' Textbox component
+        api_name="/predict"
+    )
+    st.write(result)
     
-    for i in range(60):
-        st.session_state.sentence2 = ""
-        st.session_state.value = 0
-        st.session_state.sentence2 = st.session_state.df["question"][i]
-        client = Client("https://pyamath-chatbot.hf.space/--replicas/sbj9h/")
-        result = client.predict(
-            "Howdy!",	# str  in 'user_msg' Textbox component
-            api_name="/predict"
-        )
-        st.session_state.value = result
-        if st.session_state.value > st.session_state.similar_value:
-            st.session_state.similar_value = st.session_state.value
-            st.session_state.similar_word = st.session_state.df["answer"][i]
+    # for i in range(60):
+    #     st.session_state.sentence2 = ""
+    #     st.session_state.value = 0
+    #     st.session_state.sentence2 = st.session_state.df["question"][i]
+    #     client = Client("https://pyamath-chatbot.hf.space/--replicas/sbj9h/")
+    #     result = client.predict(
+    #         "Howdy!",	# str  in 'user_msg' Textbox component
+    #         api_name="/predict"
+    #     )
+    #     st.session_state.value = result
+    #     if st.session_state.value > st.session_state.similar_value:
+    #         st.session_state.similar_value = st.session_state.value
+    #         st.session_state.similar_word = st.session_state.df["answer"][i]
 
     # 以前のチャットログを表示
     for chat in st.session_state.chat_log:
@@ -45,8 +52,8 @@ if user_msg:
     with st.chat_message(USER_NAME):
         st.write(user_msg)
     with st.chat_message(ASSISTANT_NAME):
-        st.write(st.session_state.similar_word)
+        st.write(user_msg)
 
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
-    st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": st.session_state.similar_word})
+    st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": user_msg})
