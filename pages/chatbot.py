@@ -22,8 +22,11 @@ if user_msg:
         user_msg,	# str  in 'user_msg' Textbox component
         api_name="/predict"
     )
+    
     st.session_state.similar_word = result[0]
     st.session_state.value = result[1]
+
+    st.write(st.session_state.value)
         
     # for i in range(60):
     #     st.session_state.sentence2 = ""
@@ -49,7 +52,7 @@ if user_msg:
     with st.chat_message(USER_NAME):
         st.write(user_msg)
     with st.chat_message(ASSISTANT_NAME):
-        st.write(user_msg)
+        st.write(st.session_state.similar_word)
 
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
