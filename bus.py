@@ -12,12 +12,16 @@ st.set_page_config(
 )
 
 # csv読み込み
-df0 = pd.read_csv('bus.csv', index_col = 0, encoding="Shift-JIS")
+df1 = pd.read_csv('bus.csv', index_col = 0, encoding="Shift-JIS")
+df2 = pd.read_csv('bus2.csv', index_col = 0, encoding="Shift-JIS")
+
 
 # セッション情報の初期化
 if "page_id" not in st.session_state:
     st.session_state.page_id = -1
-    st.session_state.df0 = df0
+    st.session_state.df1 = df1
+    st.session_state.df2 = df2
+
 
 # 各種メニューの非表示設定
 hide_style = """
@@ -74,6 +78,12 @@ def main_page():
                }
         </style>
         """, unsafe_allow_html=True)
+
+    option = st.selectbox(
+        "データ",
+        ("bus1", "bus2"),
+        index=bus1,
+    )
 
     column_list = st.session_state.df0.columns[3:].values
     #column_list_selector = st.sidebar.multiselect("停留所", column_list, default = column_list)
