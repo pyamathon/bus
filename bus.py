@@ -12,8 +12,8 @@ st.set_page_config(
 )
 
 # csv読み込み
-df1 = pd.read_csv('bus.csv', index_col = 0, encoding="cp932")
-df2 = pd.read_csv('bus2.csv', index_col = 0, encoding="cp932")
+df1 = pd.read_csv('bus.csv', index_col = 0, encoding=='cp932')
+df2 = pd.read_csv('bus2.csv', index_col = 0, encoding=='cp932')
 
 
 # セッション情報の初期化
@@ -79,11 +79,15 @@ def main_page():
         </style>
         """, unsafe_allow_html=True)
 
-    option = st.selectbox(
+    option = st.sidebar.selectbox(
         "データ",
         ("bus1", "bus2"),
         index=bus1,
     )
+    if option = "bus1":
+        st.session_state.df0 = st.session_state.df1
+    else:
+        st.session_state.df0 = st.session_state.df2
 
     column_list = st.session_state.df0.columns[3:].values
     #column_list_selector = st.sidebar.multiselect("停留所", column_list, default = column_list)
