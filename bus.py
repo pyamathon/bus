@@ -78,9 +78,9 @@ def main_page():
         </style>
         """, unsafe_allow_html=True)
 
-    data_list = [bus1, bus2]
+    data_list = ['bus1', 'bus2']
     option = st.sidebar.selectbox("データ",data_list)
-    if option == bus1:
+    if option == 'bus1':
         st.session_state.df0 = st.session_state.df1
     else:
         st.session_state.df0 = st.session_state.df2
