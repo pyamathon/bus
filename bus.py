@@ -12,9 +12,8 @@ st.set_page_config(
 )
 
 # csv読み込み
-df1 = pd.read_csv('bus.csv', index_col = 0, encoding=='cp932')
-df2 = pd.read_csv('bus2.csv', index_col = 0, encoding=='cp932')
-
+df1 = pd.read_csv('bus.csv', index_col = 0, encoding = 'cp932')
+df2 = pd.read_csv('bus2.csv', index_col = 0, encoding = 'cp932')
 
 # セッション情報の初期化
 if "page_id" not in st.session_state:
