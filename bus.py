@@ -78,11 +78,7 @@ def main_page():
         </style>
         """, unsafe_allow_html=True)
 
-    option = st.sidebar.selectbox(
-        "データ",
-        ("bus1", "bus2"),
-        index=bus1,
-    )
+    option = st.sidebar.selectbox("データ",("bus1", "bus2"),index=bus1)
     if option == "bus1":
         st.session_state.df0 = st.session_state.df1
     else:
