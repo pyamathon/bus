@@ -83,7 +83,7 @@ def main_page():
         ("bus1", "bus2"),
         index=bus1,
     )
-    if option = "bus1":
+    if option == "bus1":
         st.session_state.df0 = st.session_state.df1
     else:
         st.session_state.df0 = st.session_state.df2
