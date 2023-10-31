@@ -80,7 +80,7 @@ def main_page():
 
     data_list = ['bus1', 'bus2']
     option = 'bus1'
-        st.session_state.df0 = st.session_state.df1
+    st.session_state.df0 = st.session_state.df1
 
     column_list = st.session_state.df0.columns[3:].values
     #column_list_selector = st.sidebar.multiselect("停留所", column_list, default = column_list)
