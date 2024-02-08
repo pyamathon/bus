@@ -32,7 +32,7 @@ if user_msg:
     #     st.session_state.sentence2 = ""
     #     st.session_state.value = 0
     #     st.session_state.sentence2 = st.session_state.df["question"][i]
-    #     client = Client("https://pyamath-chatbot.hf.space/--replicas/kp9kw/")
+    #     client = Client("https://pyamath-chatbot.hf.space")
     #     result = client.predict(
     #         user_msg,	# str  in 'user_msg' Textbox component
     #         api_name="/predict"
