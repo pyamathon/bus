@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # csv読み込み
-df1 = pd.read_csv('bus.csv', index_col = 0,encoding = "shift-jis")
+df1 = pd.read_csv('bus.csv', index_col = 0)
 df2 = pd.read_csv('bus2.csv', index_col = 0)
 
 # セッション情報の初期化
