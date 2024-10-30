@@ -110,7 +110,7 @@ def main_page():
     else:
         st.sidebar.text(''.join(str(end_point_selector)) + "が選ばれています。")
 
-    if st.session_state.flag == 0:
+    if st.session_state.flag == 1:
         st.session_state.select_arr = st.session_state.df0[
                                             (
                                             st.session_state.df0["時台"].isin(around_time_selector)
