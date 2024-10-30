@@ -20,6 +20,7 @@ if "page_id" not in st.session_state:
     st.session_state.page_id = -1
     st.session_state.df1 = df1
     st.session_state.df2 = df2
+    st.session_state.flag = 0
 
 
 # 各種メニューの非表示設定
