@@ -89,14 +89,15 @@ def main_page():
 
     #サイドバー作成用
     #[6,7,8]時台
-    df_list('時台')
-    around_time_selector = st.sidebar.multiselect("時台",st.session_state.df_list, default = st.session_state.df_list, key = "around_time", on_change = change_time)
-    if len(around_time_selector) == 0:
-        st.sidebar.text("どの時間も選ばれていません")
-    elif len(around_time_selector) == 3:
-        st.sidebar.text("全ての時台が選ばれています。")
-    else:
-        st.sidebar.text(''.join(str(around_time_selector)) + "時台が選ばれています。")
+    if st.session_state.flag = 1:
+        df_list('時台')
+        around_time_selector = st.sidebar.multiselect("時台",st.session_state.df_list, default = st.session_state.df_list, key = "around_time", on_change = change_time)
+        if len(around_time_selector) == 0:
+            st.sidebar.text("どの時間も選ばれていません")
+        elif len(around_time_selector) == 3:
+            st.sidebar.text("全ての時台が選ばれています。")
+        else:
+            st.sidebar.text(''.join(str(around_time_selector)) + "時台が選ばれています。")
 
     #終点
     df_list("終点")
