@@ -31,10 +31,11 @@ if user_msg:
     #         user_msg,	# str  in 'user_msg' Textbox component
     #         api_name="/predict"
     #     )
-    #     st.session_state.value = result[1]
-    #     if st.session_state.value > st.session_state.similar_value:
-    #         st.session_state.similar_value = st.session_state.value
-    #         st.session_state.similar_word = st.session_state.df["answer"][i]
+    st.session_state.value = result[1]
+    if st.session_state.value > 0.95:
+        st.session_state.similar_word = result[0]
+    else:
+        st.session_state.similar_word="別の質問をしてください"
 
     # 以前のチャットログを表示
     for chat in st.session_state.chat_log:
