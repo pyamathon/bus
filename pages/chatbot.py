@@ -17,7 +17,7 @@ st.session_state.df = pd.read_csv('dict.csv')
 
 user_msg = st.chat_input("質問、要望等あれば入力してください")
 if user_msg:
-    client = Client("pyamath/chatbot2",hf_token="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")
+    client = Client("pyamath/chatbot")
     result = client.predict(
         user_msg,	# str  in 'user_msg' Textbox component
         api_name="/predict"
