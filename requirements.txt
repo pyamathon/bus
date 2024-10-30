@@ -4,5 +4,4 @@ numpy
 matplotlib
 japanize_matplotlib
 plotly
-gradio==5.4.0
 gradio_client
