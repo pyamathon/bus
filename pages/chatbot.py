@@ -21,13 +21,7 @@ if user_msg:
     result = client.predict(
         user_msg,	# str  in 'user_msg' Textbox component
         api_name="/predict"
-    )
-    
-    st.session_state.similar_word = result[0]
-    st.session_state.value = result[1]
-
-    st.write(st.session_state.value)
-        
+    )        
     # for i in range(60):
     #     st.session_state.sentence2 = ""
     #     st.session_state.value = 0
