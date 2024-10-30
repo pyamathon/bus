@@ -17,7 +17,7 @@ st.session_state.df = pd.read_csv('dict.csv')
 
 user_msg = st.chat_input("質問、要望等あれば入力してください")
 if user_msg:
-    client = Client("pyamath/chatbot")
+    client = Client("pyamath/chatbot3")
     result = client.predict(
         user_msg,	# str  in 'user_msg' Textbox component
         api_name="/predict"
@@ -34,6 +34,7 @@ if user_msg:
     st.session_state.value = result[1]
     if st.session_state.value > 0.95:
         st.session_state.similar_word = result[0]
+        st.session_state.flag = result[2]
     else:
         st.session_state.similar_word="別の質問をしてください"
 
