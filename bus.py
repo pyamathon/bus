@@ -110,22 +110,37 @@ def main_page():
     else:
         st.sidebar.text(''.join(str(end_point_selector)) + "が選ばれています。")
 
-
-    st.session_state.select_arr = st.session_state.df0[
-                                        (
-                                        st.session_state.df0["時台"].isin(around_time_selector)
-                                        & st.session_state.df0["終点"].isin(end_point_selector)
-                                        & st.session_state.df0["始発時分"].isin(index_selector)
-                                        )
-                                    ][column_list]
-
-    st.session_state.select_arr1 = st.session_state.df0[
-                                        (
-                                        st.session_state.df0["時台"].isin(around_time_selector)
-                                        & st.session_state.df0["終点"].isin(end_point_selector)
-                                        & st.session_state.df0["始発時分"].isin(index_selector)
-                                        )
-                                    ]
+    if st.session_state.flag == 0:
+        st.session_state.select_arr = st.session_state.df0[
+                                            (
+                                            st.session_state.df0["時台"].isin(around_time_selector)
+                                            & st.session_state.df0["終点"].isin(end_point_selector)
+                                            & st.session_state.df0["始発時分"].isin(index_selector)
+                                            )
+                                        ][column_list]
+    
+        st.session_state.select_arr1 = st.session_state.df0[
+                                            (
+                                            st.session_state.df0["時台"].isin(around_time_selector)
+                                            & st.session_state.df0["終点"].isin(end_point_selector)
+                                            & st.session_state.df0["始発時分"].isin(index_selector)
+                                            )
+                                        ]
+    else:
+        st.session_state.select_arr = st.session_state.df0[
+                                            (
+                                            st.session_state.df0["終点"].isin(end_point_selector)
+                                            & st.session_state.df0["始発時分"].isin(index_selector)
+                                            )
+                                        ][column_list]
+    
+        st.session_state.select_arr1 = st.session_state.df0[
+                                            (
+                                            st.session_state.df0["終点"].isin(end_point_selector)
+                                            & st.session_state.df0["始発時分"].isin(index_selector)
+                                            )
+                                        ]
+        
 
     st.dataframe(st.session_state.select_arr1,800,300)
     fig = go.Figure()
