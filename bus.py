@@ -90,7 +90,7 @@ def main_page():
 
     #サイドバー作成用
     #[6,7,8]時台
-    if st.session_state.flag == 1:
+    if st.session_state.flag == "A":
         df_list('時台')
         around_time_selector = st.sidebar.multiselect("時台",st.session_state.df_list, default = st.session_state.df_list, key = "around_time", on_change = change_time)
         if len(around_time_selector) == 0:
