@@ -141,8 +141,8 @@ def main_page():
                                             )
                                         ]
         
-
-    st.dataframe(st.session_state.select_arr1,800,300)
+    # データ表示用
+    st.dataframe(st.session_state.select_arr1)
     fig = go.Figure()
     for i in range(len(st.session_state.select_arr.index)):
         fig.add_traces(go.Scatter(x = st.session_state.select_arr.columns.values,
