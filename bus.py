@@ -13,7 +13,7 @@ st.set_page_config(
 
 # csv読み込み
 df1 = pd.read_csv('20221012.csv', index_col = 0)
-df2 = pd.read_csv('20220407.csv', index_col = 0)
+df2 = pd.read_csv('20220406.csv', index_col = 0)
 
 # セッション情報の初期化
 if "page_id" not in st.session_state:
