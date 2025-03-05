@@ -62,8 +62,8 @@ def main_page():
     st.markdown("""
         <style>
                .block-container {
-                    padding-top: 1rem;
-                    padding-bottom: 0rem;
+                    padding-top: 3rem;
+                    padding-bottom: 3rem;
                     padding-left: 1rem;
                     padding-right: 1rem;
                 }
