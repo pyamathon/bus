@@ -141,7 +141,8 @@ def main_page():
                                             )
                                         ]
         
-    
+    # データ表示用
+    st.dataframe(st.session_state.select_arr1)
     fig = go.Figure()
     for i in range(len(st.session_state.select_arr.index)):
         fig.add_traces(go.Scatter(x = st.session_state.select_arr.columns.values,
@@ -150,8 +151,6 @@ def main_page():
                 )
     fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
     st.plotly_chart(fig)
-    # データ表示用
-    st.dataframe(st.session_state.select_arr1)
 
 # ページ判定
 if st.session_state.page_id == -1:
